@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -118,10 +119,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
+//                        HashMap<String,Object> map = new HashMap<>();
+//                        map.put("name",name);
+//                        map.put("email",email);
+//                        map.put("roll",roll);
+//                        map.put("role",role1);
+
                         User user = new User(name,email,roll,role1);
-                        FirebaseDatabase.getInstance().getReference("Users")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        FirebaseDatabase.getInstance().getReference().child("Users").push().setValue(user).
+                                addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
